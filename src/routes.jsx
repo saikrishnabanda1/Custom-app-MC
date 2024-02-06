@@ -2,10 +2,13 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Spacings from '@commercetools-uikit/spacings';
 import Channels from './components/channels';
 import Welcome from './components/welcome';
-
+import CustomField from './components/customField/customField';
+import CustomFieldForm from './components/customFieldForm/CustomFieldForm';
+import CustomFeature from './components/customFeature'
+import CustomFieldComp from './components/custom-field';
+import FormComponent from './components/custom-form';
 const ApplicationRoutes = () => {
   const match = useRouteMatch();
-console.log('xdgsfe',match)
   /**
    * When using routes, there is a good chance that you might want to
    * restrict the access to a certain route based on the user permissions.
@@ -23,9 +26,18 @@ console.log('xdgsfe',match)
         <Route path={`${match.path}/channels`}>
           <Channels linkToWelcome={match.url} />
         </Route>
-        <Route>
-          <Welcome />
+        {/* <Route path={`${match.path}/customField`}>
+          <CustomField />
+        </Route> */}
+        <Route path={`${match.path}/custom-form`}>
+          <FormComponent />
         </Route>
+        <Route path={`${match.path}/customFeature`}>
+          <CustomFeature />
+        </Route>
+        {/* <Route path={`${match.path}/customFieldForm`}>
+          <CustomFieldForm />
+        </Route> */}
       </Switch>
     </Spacings.Inset>
   );
