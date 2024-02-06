@@ -1,0 +1,43 @@
+mutation AddCustomType(
+  $key: String!
+  $name: [LocalizedStringItemInputType!]!
+  $description: [LocalizedStringItemInputType!]
+  $resourceType: [String!]!
+  $fieldDefinitions: [FieldDefinitionInput!]
+) {
+  createTypeDefinition(
+    draft: {
+      key: $key
+      name: $name
+      description: $description
+      resourceTypeIds: $resourceType
+      fieldDefinitions: $fieldDefinitions
+    }
+  ) {
+    id
+    key
+    version
+    createdAt
+    lastModifiedAt
+    nameAllLocales {
+      locale
+      value
+    }
+    descriptionAllLocales {
+      locale
+      value
+    }
+    fieldDefinitions {
+      name
+      required
+      inputHint
+      labelAllLocales {
+        locale
+        value
+      }
+      type {
+        name
+      }
+    }
+  }
+}

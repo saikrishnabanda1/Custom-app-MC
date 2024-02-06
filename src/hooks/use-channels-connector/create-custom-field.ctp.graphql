@@ -1,0 +1,30 @@
+mutation AddCustomField(
+  $key: String!
+  $name: String!
+  $resourceType: String!
+  $name: [TypeUpdateAction!]!
+  $description: [TypeUpdateAction!]!
+) {
+  createTypeDefinition(
+    draft: {
+      key: $key
+      name: $name
+      description: $description
+      resourceTypeIds : [ $resourceType ]
+    }
+  ) {
+    id
+    key
+    version
+    createdAt
+    lastModifiedAt
+    nameAllLocales{
+      locale
+      value
+    }
+    descriptionAllLocales{
+      locale
+      value
+    }
+  }
+}

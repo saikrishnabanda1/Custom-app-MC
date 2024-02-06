@@ -1,0 +1,28 @@
+query FetchCustomFieldDetailQuery($id: String!) {
+  typeDefinition(id: $id){
+    resourceTypeIds
+    id
+    key
+    version
+    nameAllLocales{
+      locale
+      value
+    }
+    descriptionAllLocales{
+      locale
+      value
+    }
+    fieldDefinitions{
+      name
+      required
+      inputHint
+      labelAllLocales{
+        locale
+        value
+      }
+      type{
+        name
+      }
+    }
+  }
+}
