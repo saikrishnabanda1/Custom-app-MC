@@ -17,12 +17,12 @@ const config = {
     },
   },
   oAuthScopes: {
-    view: ['view_products'],
-    manage: ['manage_products'],
+    view: ['view_products','view_customers','view_types'],
+    manage: ['manage_products','manage_customers','manage_types'],
   },
   icon: '${path:@commercetools-frontend/assets/application-icons/rocket.svg}',
   mainMenuLink: {
-    defaultLabel: 'Template starter',
+    defaultLabel: 'Custom Application',
     labelAllLocales: [],
     permissions: [PERMISSIONS.View],
   },
@@ -30,6 +30,12 @@ const config = {
     {
       uriPath: 'channels',
       defaultLabel: 'Channels',
+      labelAllLocales: [],
+      permissions: [PERMISSIONS.View],
+    },
+    {
+      uriPath: 'customFeature',
+      defaultLabel: 'Manage Custom Fields',
       labelAllLocales: [],
       permissions: [PERMISSIONS.View],
     },

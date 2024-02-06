@@ -37,6 +37,7 @@
     "@commercetools-test-data/channel": "6.6.0",
     "@commercetools-test-data/commons": "6.6.0",
     "@commercetools-test-data/core": "6.6.0",
+    "@commercetools-uikit/collapsible-panel": "^17.0.1",
     "@commercetools-uikit/constraints": "^17.0.0",
     "@commercetools-uikit/data-table": "^17.0.0",
     "@commercetools-uikit/flat-button": "^17.0.0",
@@ -49,6 +50,7 @@
     "@commercetools-uikit/localized-text-input": "^17.0.0",
     "@commercetools-uikit/notifications": "^17.0.0",
     "@commercetools-uikit/pagination": "^17.0.0",
+    "@commercetools-uikit/secondary-button": "^17.0.1",
     "@commercetools-uikit/select-field": "^17.0.0",
     "@commercetools-uikit/spacings": "^17.0.0",
     "@commercetools-uikit/text": "^17.0.0",
@@ -87,8 +89,9 @@
     "react-dom": "17.0.2",
     "react-intl": "^6.4.5",
     "react-redux": "7.2.9",
-    "react-router-dom": "5.3.4",
-    "redux": "4.2.1"
+    "react-router-dom": "^5.3.4",
+    "redux": "4.2.1",
+    "styled-components": "^6.1.8"
   },
   "resolutions": {
     "@emotion/react": "^11.11.1",
@@ -98,6 +101,5 @@
     "@types/react-dom": "<18",
     "@types/react-router": "<6",
     "@types/react-router-dom": "<6"
-  },
-  "devDependencies": {}
+  }
 }
