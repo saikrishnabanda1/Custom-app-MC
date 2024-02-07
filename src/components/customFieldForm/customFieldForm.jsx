@@ -7,23 +7,17 @@ import validate from './validate';
 import PropTypes from 'prop-types';
 
 const CustomFieldForm = (props) => {
-  const onSubmitForm = ()=> {
-    console.log('submit')
-  }
+  const onSubmitForm = () => {};
   const dataLocale = useApplicationContext((context) => context.dataLocale);
   const formik = useFormik({
-    // Pass initial values from the parent component.
     initialValues: {
-      name:'sai kifhns'
+      name: '',
     },
-    // Handle form submission in the parent component.
     onSubmit: onSubmitForm,
     validate,
     enableReinitialize: true,
   });
 
-  console.log('Formikfiorn',formik)
-  // Only contains the form elements, no buttons.
   const formElements = (
     <Spacings.Stack scale="l">
       <LocalizedTextField
@@ -32,9 +26,7 @@ const CustomFieldForm = (props) => {
         isRequired
         selectedLanguage={dataLocale}
         value={formik?.values?.name}
-        errors={
-          LocalizedTextField.toFieldErrors(formik?.errors).name
-        }
+        errors={LocalizedTextField.toFieldErrors(formik?.errors).name}
         touched={formik?.touched?.name}
         onChange={formik?.handleChange}
         onBlur={formik?.handleBlur}
@@ -44,9 +36,7 @@ const CustomFieldForm = (props) => {
         title="Key"
         isRequired
         value={formik?.values.key}
-        errors={
-          TextField.toFieldErrors(formik?.errors).key
-        }
+        errors={TextField.toFieldErrors(formik?.errors).key}
         touched={formik?.touched.key}
         onChange={formik?.handleChange}
         onBlur={formik?.handleBlur}
@@ -61,7 +51,7 @@ const CustomFieldForm = (props) => {
     submitForm: formik?.handleSubmit,
     handleCancel: formik?.handleReset,
   });
-}
+};
 
 CustomFieldForm.displayName = 'CustomFieldForm';
 CustomFieldForm.propTypes = {
@@ -78,4 +68,3 @@ CustomFieldForm.propTypes = {
 };
 
 export default CustomFieldForm;
-

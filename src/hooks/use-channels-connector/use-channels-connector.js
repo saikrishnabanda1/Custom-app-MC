@@ -20,6 +20,8 @@ import FetchChannelDetailsQuery from './fetch-channel-details.ctp.graphql';
 import UpdateChannelDetailsMutation from './update-channel-details.ctp.graphql';
 import AddCustomFieldMutation from '../use-channels-connector/create-custom-field.ctp.graphql';
 import AddCustomType from './create-custom-type.ctp.graphql';
+import RemoveFieldDefinition from './remove-field-definition.ctp.graphql';
+import DeleteCustomType from './delete-custom-type.ctp.graphql'
 
 const syncStores = createSyncChannels();
 
@@ -51,7 +53,6 @@ export const useCreateCustomType = () => {
   const [addingCustomFields, { loading }] = useMcMutation(AddCustomType);
 
   const syncTypes = createSyncTypes();
-  //const actionsTemp = syncTypes.buildActions(nextDraft, originalDraft);
   const execute = async ({
     key,
     name,
@@ -59,16 +60,6 @@ export const useCreateCustomType = () => {
     resourceType,
     fieldDefinitions,
   }) => {
-    // const actions = syncTypes.buildActions(
-    //     nextDraft,
-    //     originalDraft
-    // );
-
-    // for(var i=0;i<actions.length;i++){
-    //     if(actions[i].action == "setDescription"){
-    //         actions[i].description = description;
-    //     }
-    // }
     try {
       return await addingCustomFields({
         context: {
@@ -92,6 +83,64 @@ export const useCreateCustomType = () => {
     execute,
   };
 };
+
+export const removeFieldDefinition = () => {
+  const [removeCustomFieldDefinition, { loading }] = useMcMutation(
+    RemoveFieldDefinition
+  );
+
+  const syncTypes = createSyncTypes();
+  const execute = async ({ typeId, version, actions }) => {
+    try {
+      return await removeCustomFieldDefinition({
+        context: {
+          target: GRAPHQL_TARGETS.COMMERCETOOLS_PLATFORM,
+        },
+        variables: {
+          typeId: typeId,
+          version: version,
+          actions: actions,
+        },
+      });
+    } catch (graphQlResponse) {
+      throw extractErrorFromGraphQlResponse(graphQlResponse);
+    }
+  };
+
+  return {
+    loading,
+    execute,
+  };
+};
+
+export const deleteCustomTypeById = () => {
+  const [deleteCustomTypeById, { loading }] = useMcMutation(
+    DeleteCustomType
+  );
+
+  const syncTypes = createSyncTypes();
+  const execute = async ({ typeId, version }) => {
+    try {
+      return await deleteCustomTypeById({
+        context: {
+          target: GRAPHQL_TARGETS.COMMERCETOOLS_PLATFORM,
+        },
+        variables: {
+          typeId: typeId,
+          version: version,
+        },
+      });
+    } catch (graphQlResponse) {
+      throw extractErrorFromGraphQlResponse(graphQlResponse);
+    }
+  };
+
+  return {
+    loading,
+    execute,
+  };
+};
+
 
 export const useCustomFieldUpdater = () => {
   const [updateCustomFields, { loading }] = useMcMutation(
