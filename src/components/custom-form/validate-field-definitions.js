@@ -2,7 +2,6 @@ import TextInput from '@commercetools-uikit/text-input';
 import omitEmpty from 'omit-empty-es';
 
 const validate = (formikValues) => {
-  console.log('field .handleSubmit', formikValues);
   const errors = {
     name: {},
     label: {},

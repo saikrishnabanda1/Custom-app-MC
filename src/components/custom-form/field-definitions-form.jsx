@@ -23,8 +23,6 @@ const FieldDefinitionsForm = ({
 }) => {
 
   const onSaveFieldDefinitions = async (formikValues) => {
-    // formik.handleSubmit()
-    console.log('formikValues67t', formikValues);
     fieldDefinitionsData.push(formikValues);
     setFieldDefinitionsData(fieldDefinitionsData);
     onCloseModal();
@@ -44,7 +42,6 @@ const FieldDefinitionsForm = ({
       [e.target.name]: e.target.value,
     });
   };
-  console.log('vs4tge', formik);
 
   const getTextField = (customName, type, values, errors, touched) => {
     return (
