@@ -1,0 +1,32 @@
+mutation DeleteCustomType(
+  $typeId: String
+  $version: Long!
+) {
+  deleteTypeDefinition(id: $typeId, version: $version) {
+    id
+    key
+    version
+    createdAt
+    lastModifiedAt
+    nameAllLocales {
+      locale
+      value
+    }
+    descriptionAllLocales {
+      locale
+      value
+    }
+    fieldDefinitions {
+      name
+      required
+      inputHint
+      labelAllLocales {
+        locale
+        value
+      }
+      type {
+        name
+      }
+    }
+  }
+}
