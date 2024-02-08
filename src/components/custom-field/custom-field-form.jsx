@@ -14,7 +14,7 @@ import {
 import { useApplicationContext } from '@commercetools-frontend/application-shell-connectors';
 import Text from '@commercetools-uikit/text';
 import CollapsiblePanel from '@commercetools-uikit/collapsible-panel';
-import { BinLinearIcon } from '@commercetools-uikit/icons';
+import { BinLinearIcon, EditIcon } from '@commercetools-uikit/icons';
 import {
   getCustomField,
   removeFieldDefinition,
@@ -22,8 +22,8 @@ import {
 import { useParams } from 'react-router';
 
 const custColumns = [
-  { key: 'name', label: 'Key' },
-  { key: 'labelAllLocales', label: 'Name' },
+  { key: 'name', label: 'Name' },
+  { key: 'labelAllLocales', label: 'Label' },
   { key: 'required', label: 'Required' },
   { key: 'inputHint', label: 'Input Hint' },
   { key: 'delete', label: 'Delete' },
@@ -71,7 +71,15 @@ const CustomFieldDetailsForm = (props) => {
               name = item[column.key][i].value;
           }
         }
-        return name;
+        return (
+          <>
+            {name}
+            <EditIcon
+              onClick={() => deleteAttribute(versionId, item.name)}
+              size="medium"
+            />
+          </>
+        );
       case 'required':
         var isRequired;
         if (item[column.key]) {

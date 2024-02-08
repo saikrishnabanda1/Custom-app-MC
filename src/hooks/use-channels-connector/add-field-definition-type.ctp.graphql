@@ -1,0 +1,33 @@
+mutation AddCustomFieldForType(
+  $typeId: String
+  $version: Long!
+  $actions: [TypeUpdateAction!]!
+) {
+  updateTypeDefinition(id: $typeId, version: $version,actions: $actions) {
+    id
+    key
+    version
+    createdAt
+    lastModifiedAt
+    nameAllLocales {
+      locale
+      value
+    }
+    descriptionAllLocales {
+      locale
+      value
+    }
+    fieldDefinitions {
+      name
+      required
+      inputHint
+      labelAllLocales {
+        locale
+        value
+      }
+      type {
+        name
+      }
+    }
+  }
+}
