@@ -8,5 +8,6 @@ export {
   useCreateCustomType,
   getCustomField,
   removeFieldDefinition,
-  deleteCustomTypeById
+  deleteCustomTypeById,
+  addfieldDefinitionByType
 } from './use-channels-connector';

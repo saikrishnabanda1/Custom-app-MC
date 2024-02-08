@@ -22,6 +22,7 @@ import AddCustomFieldMutation from '../use-channels-connector/create-custom-fiel
 import AddCustomType from './create-custom-type.ctp.graphql';
 import RemoveFieldDefinition from './remove-field-definition.ctp.graphql';
 import DeleteCustomType from './delete-custom-type.ctp.graphql'
+import AddCustomFieldForType from './add-field-definition-type.ctp.graphql'
 
 const syncStores = createSyncChannels();
 
@@ -52,7 +53,6 @@ export const useCustomFields = ({ page, perPage, tableSorting }, type) => {
 export const useCreateCustomType = () => {
   const [addingCustomFields, { loading }] = useMcMutation(AddCustomType);
 
-  const syncTypes = createSyncTypes();
   const execute = async ({
     key,
     name,
@@ -89,7 +89,6 @@ export const removeFieldDefinition = () => {
     RemoveFieldDefinition
   );
 
-  const syncTypes = createSyncTypes();
   const execute = async ({ typeId, version, actions }) => {
     try {
       return await removeCustomFieldDefinition({
@@ -118,7 +117,6 @@ export const deleteCustomTypeById = () => {
     DeleteCustomType
   );
 
-  const syncTypes = createSyncTypes();
   const execute = async ({ typeId, version }) => {
     try {
       return await deleteCustomTypeById({
@@ -141,6 +139,33 @@ export const deleteCustomTypeById = () => {
   };
 };
 
+export const addfieldDefinitionByType = () => {
+  const [addFieldDefinitionForType, { loading }] = useMcMutation(
+    AddCustomFieldForType
+  );
+
+  const execute = async ({ typeId, version,actions }) => {
+    try {
+      return await addFieldDefinitionForType({
+        context: {
+          target: GRAPHQL_TARGETS.COMMERCETOOLS_PLATFORM,
+        },
+        variables: {
+          typeId: typeId,
+          version: version,
+          actions:actions
+        },
+      });
+    } catch (graphQlResponse) {
+      throw extractErrorFromGraphQlResponse(graphQlResponse);
+    }
+  };
+
+  return {
+    loading,
+    execute,
+  };
+};
 
 export const useCustomFieldUpdater = () => {
   const [updateCustomFields, { loading }] = useMcMutation(
@@ -148,7 +173,6 @@ export const useCustomFieldUpdater = () => {
   );
 
   const syncTypes = createSyncTypes();
-  //const actionsTemp = syncTypes.buildActions(nextDraft, originalDraft);
   const execute = async ({
     typeId,
     version,
