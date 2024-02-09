@@ -23,11 +23,11 @@ export default defineMessages({
   },
   customFieldKeyLabel: {
     id: 'CustomField.customFieldKeyLabel',
-    defaultMessage: 'Custom Field Key',
+    defaultMessage: 'Custom Type Key',
   },
   customFieldNameLabel: {
     id: 'CustomField.customFieldNameLabel',
-    defaultMessage: 'Custom Field Name',
+    defaultMessage: 'Custom Type Name',
   },
   hint: {
     id: 'CustomField.hint',
@@ -40,7 +40,7 @@ export default defineMessages({
   },
   customFieldDescription: {
     id: 'CustomField.customFieldDescription',
-    defaultMessage: 'Custom Field Description',
+    defaultMessage: 'Custom Type Description',
   },
   customFieldErrorMessage: {
     id: 'CustomField.customFieldErrorMessage',
