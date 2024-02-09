@@ -29,11 +29,6 @@ const inputHintOptions = [
 
 const FieldDefinitionsForm = ({ formModalState, onCloseModal, versionId }) => {
   const params = useParams();
-  const { dataLocale, projectLanguages } = useApplicationContext((context) => ({
-    dataLocale: context.dataLocale,
-    projectLanguages: context.project.languages,
-  }));
-
   const addFieldDefinitionForType = addfieldDefinitionByType();
 
   const onSaveFieldDefinitions = async (formikValues) => {

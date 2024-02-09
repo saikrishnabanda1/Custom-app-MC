@@ -63,7 +63,7 @@ const CustomFieldDetailsForm = (props) => {
             value: item?.label,
           },
           type: {
-            String: {
+            [item?.type]: {
               dummy: item?.type,
             },
           },
@@ -219,7 +219,6 @@ const CustomFieldDetailsForm = (props) => {
             setListOfFieldDefinitions={setListOfFieldDefinitions}
             fieldDefinitionsData={fieldDefinitionsData}
             setFieldDefinitionsData={setFieldDefinitionsData}
-            // handleSubmitFD={formik.handleSubmit}
           />
         ) : null}
 

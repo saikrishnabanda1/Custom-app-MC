@@ -52,12 +52,6 @@ const FieldDefinitionsForm = ({
     enableReinitialize: true,
   });
 
-  const handleChange = (e) => {
-    setListOfFieldDefinitions({
-      ...listOfFieldDefinitions,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const getTextField = (customName, type, values, errors, touched) => {
     return (
