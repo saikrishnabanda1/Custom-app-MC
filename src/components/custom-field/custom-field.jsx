@@ -30,11 +30,17 @@ import messages from './messages';
 import PrimaryButton from '@commercetools-uikit/primary-button';
 import { useCallback, useState } from 'react';
 import FieldDefinitionsForm from './field-definitions-form';
+import EditFieldForm from './edit-field-form';
 
 const CustomFieldComp = (props) => {
   const intl = useIntl();
   const params = useParams();
   const [formModalState, setFormModalState] = useState(false);
+  const [formModalStateLabel, setFormModalStateLabel] = useState(false);
+  const [editLabelState, setEditLabelState] = useState(false);
+  const [labelStateValue, setLabelStateValue] = useState();
+  const [fieldDefinitionValues, setFieldDefinitionsValues] = useState();
+  
   const { dataLocale, projectLanguages } = useApplicationContext((context) => ({
     dataLocale: context.dataLocale ?? '',
     projectLanguages: context.project?.languages ?? [],
@@ -133,12 +139,26 @@ const CustomFieldComp = (props) => {
     setFormModalState(!formModalState);
   };
 
+  const onCloseEditModal = () => {
+    setFormModalStateLabel(!formModalStateLabel);
+  };
+
   return (
     <CustomFieldForm
       initialValues={docToFormValues(customFieldDetails, projectLanguages)}
       onSubmit={handleSubmit}
       isReadOnly={!canManage}
       dataLocale={dataLocale}
+      editLabelState={editLabelState}
+      labelState={labelStateValue}
+      fieldDefinitionValues={fieldDefinitionValues}
+      setEditLabelState={setEditLabelState}
+      setLabelStateValue={setLabelStateValue}
+      setFieldDefinitionsValues={setFieldDefinitionsValues}
+      onCloseModal={onCloseEditModal}
+      setFormModalStateLabel={setFormModalStateLabel}
+      formModalStateLabel={formModalStateLabel}
+      versionId={customFieldDetails?.version}
     >
       {(formProps) => {
         const customFieldName = formatLocalizedString(
@@ -197,6 +217,18 @@ const CustomFieldComp = (props) => {
                 formModalState={formModalState}
                 onCloseModal={onCloseModal}
                 versionId={customFieldDetails?.version}
+              />
+            ) : null}
+
+            {formModalStateLabel ? (
+              <EditFieldForm
+                onCloseModal={onCloseEditModal}
+                formModalStateLabel={formModalStateLabel}
+                versionId={customFieldDetails?.version}
+                fieldDefinitionValues={{
+                  label: fieldDefinitionValues[0]?.labelAllLocales[0]?.value,
+                  name: fieldDefinitionValues[0]?.name,
+                }}
               />
             ) : null}
           </FormModalPage>

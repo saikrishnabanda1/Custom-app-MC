@@ -24,8 +24,9 @@ import { useParams } from 'react-router';
 const custColumns = [
   { key: 'name', label: 'Name' },
   { key: 'labelAllLocales', label: 'Label' },
-  { key: 'required', label: 'Required' },
+  { key: 'type', label: 'Type' },
   { key: 'inputHint', label: 'Input Hint' },
+  { key: 'required', label: 'Required' },
   { key: 'delete', label: 'Delete' },
 ];
 
@@ -55,6 +56,15 @@ const CustomFieldDetailsForm = (props) => {
     });
   };
 
+  const onClickEditIcon = (label, name) => {
+    props.setFieldDefinitionsValues(
+      props?.initialValues?.fieldDefinition.filter((item) => item.name === name)
+    );
+    props.setLabelStateValue(label);
+    props.setEditLabelState(true);
+    props.setFormModalStateLabel(!props.formModalStateLabel);
+  };
+
   const itemRenderer = (
     item,
     column,
@@ -74,8 +84,9 @@ const CustomFieldDetailsForm = (props) => {
         return (
           <>
             {name}
+            &nbsp;
             <EditIcon
-              onClick={() => deleteAttribute(versionId, item.name)}
+              onClick={() => onClickEditIcon(name, item?.name)}
               size="medium"
             />
           </>
@@ -119,6 +130,8 @@ const CustomFieldDetailsForm = (props) => {
             size="medium"
           />
         );
+      case 'type':
+        return item[column.key]?.name;
       default:
         return item[column.key];
     }
@@ -143,7 +156,6 @@ const CustomFieldDetailsForm = (props) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           isReadOnly={props.isReadOnly}
-          //isReadOnly= "true"
           renderError={(errorKey) => {
             if (errorKey === 'duplicate') {
               return intl.formatMessage(messages.duplicateKey);
@@ -167,7 +179,6 @@ const CustomFieldDetailsForm = (props) => {
           onBlur={formik.handleBlur}
           selectedLanguage={props.dataLocale}
           isReadOnly={props.isReadOnly}
-          //isReadOnly= "true"
           horizontalConstraint={13}
         />
 
@@ -185,7 +196,6 @@ const CustomFieldDetailsForm = (props) => {
           onBlur={formik.handleBlur}
           selectedLanguage={props.dataLocale}
           isReadOnly={props.isReadOnly}
-          //isReadOnly= "true"
           horizontalConstraint={13}
         />
       </CollapsiblePanel>
