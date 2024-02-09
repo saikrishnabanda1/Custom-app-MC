@@ -12,6 +12,23 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import validate from './validate-field-definitions';
 import Spacings from '@commercetools-uikit/spacings';
+import SelectField from '@commercetools-uikit/select-field';
+
+const typeOptions = [
+  { value: 'String', label: 'String' },
+  { value: 'LocalizedString', label: 'LocalizedString' },
+  { value: 'Number', label: 'Number' },
+  { value: 'Money', label: 'Money' },
+  { value: 'Date', label: 'Date' },
+  { value: 'Time', label: 'Time' },
+  { value: 'DateTime', label: 'DateTime' },
+  { value: 'Boolean', label: 'Boolean' },
+];
+
+const inputHintOptions = [
+  { value: 'SingleLine', label: 'SingleLine' },
+  { value: 'MultiLine', label: 'MultiLine' },
+];
 
 const FieldDefinitionsForm = ({
   formModalState,
@@ -21,7 +38,6 @@ const FieldDefinitionsForm = ({
   fieldDefinitionsData,
   setFieldDefinitionsData,
 }) => {
-
   const onSaveFieldDefinitions = async (formikValues) => {
     fieldDefinitionsData.push(formikValues);
     setFieldDefinitionsData(fieldDefinitionsData);
@@ -66,6 +82,24 @@ const FieldDefinitionsForm = ({
     );
   };
 
+  const getTypeOptions = (customName, type, values, errors, touched) => {
+    return (
+      <SelectField
+        name={type}
+        title={customName}
+        value={values}
+        errors={errors}
+        touched={touched}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        options={type === 'inputHint' ? inputHintOptions : typeOptions}
+        isReadOnly={false}
+        isRequired
+        horizontalConstraint={8}
+      />
+    );
+  };
+
   const getAllFields = () => {
     return (
       <Spacings.Stack scale="xl">
@@ -85,14 +119,14 @@ const FieldDefinitionsForm = ({
           formik.touched.label
         )}
 
-        {getTextField(
+        {getTypeOptions(
           messages.fieldDefinitionType.defaultMessage,
           'type',
           formik.values.type,
           formik.errors.type,
           formik.touched.type
         )}
-        {getTextField(
+        {getTypeOptions(
           messages.fieldDefinitionInputHint.defaultMessage,
           'inputHint',
           formik.values.inputHint,

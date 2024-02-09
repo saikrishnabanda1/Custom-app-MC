@@ -1,19 +1,31 @@
 import { useFormik } from 'formik';
 import TextField from '@commercetools-uikit/text-field';
-import TextInput from '@commercetools-uikit/text-input';
-import {
-  FormModalPage,
-  useModalState,
-} from '@commercetools-frontend/application-components';
+import { FormModalPage } from '@commercetools-frontend/application-components';
 import messages from '../custom-form/messages';
 import { useParams } from 'react-router';
-import PrimaryButton from '@commercetools-uikit/primary-button';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import validate from '../custom-form/validate-field-definitions';
 import Spacings from '@commercetools-uikit/spacings';
 import { addfieldDefinitionByType } from '../../hooks/use-channels-connector/use-channels-connector';
 import { useApplicationContext } from '@commercetools-frontend/application-shell-connectors';
+import SelectField from '@commercetools-uikit/select-field';
+
+const typeOptions = [
+  { value: 'String', label: 'String' },
+  { value: 'LocalizedString', label: 'LocalizedString' },
+  { value: 'Number', label: 'Number' },
+  { value: 'Money', label: 'Money' },
+  { value: 'Date', label: 'Date' },
+  { value: 'Time', label: 'Time' },
+  { value: 'DateTime', label: 'DateTime' },
+  { value: 'Boolean', label: 'Boolean' },
+];
+
+const inputHintOptions = [
+  { value: 'SingleLine', label: 'SingleLine' },
+  { value: 'MultiLine', label: 'MultiLine' },
+];
+
 
 const FieldDefinitionsForm = ({ formModalState, onCloseModal, versionId }) => {
   const params = useParams();
@@ -38,7 +50,7 @@ const FieldDefinitionsForm = ({ formModalState, onCloseModal, versionId }) => {
                 value: formikValues?.label,
               },
               type: {
-                String: {
+                [formikValues?.type]: {
                   dummy: formikValues?.type,
                 },
               },
@@ -83,6 +95,24 @@ const FieldDefinitionsForm = ({ formModalState, onCloseModal, versionId }) => {
     );
   };
 
+  const getTypeOptions = (customName, type, values, errors, touched) => {
+    return (
+      <SelectField
+        name={type}
+        title={customName}
+        value={values}
+        errors={errors}
+        touched={touched}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        options={type === 'inputHint' ? inputHintOptions : typeOptions}
+        isReadOnly={false}
+        isRequired
+        horizontalConstraint={8}
+      />
+    );
+  };
+
   const getAllFields = () => {
     return (
       <Spacings.Stack scale="xl">
@@ -102,14 +132,14 @@ const FieldDefinitionsForm = ({ formModalState, onCloseModal, versionId }) => {
           formik.touched.label
         )}
 
-        {getTextField(
+        {getTypeOptions(
           messages.fieldDefinitionType.defaultMessage,
           'type',
           formik.values.type,
           formik.errors.type,
           formik.touched.type
         )}
-        {getTextField(
+        {getTypeOptions(
           messages.fieldDefinitionInputHint.defaultMessage,
           'inputHint',
           formik.values.inputHint,
