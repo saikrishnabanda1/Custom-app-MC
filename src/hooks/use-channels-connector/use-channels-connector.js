@@ -23,6 +23,7 @@ import AddCustomType from './create-custom-type.ctp.graphql';
 import RemoveFieldDefinition from './remove-field-definition.ctp.graphql';
 import DeleteCustomType from './delete-custom-type.ctp.graphql'
 import AddCustomFieldForType from './add-field-definition-type.ctp.graphql'
+import UpdateFieldDefinitionLabel from './update-field-definition-label.ctp.graphql'
 
 const syncStores = createSyncChannels();
 
@@ -92,6 +93,34 @@ export const removeFieldDefinition = () => {
   const execute = async ({ typeId, version, actions }) => {
     try {
       return await removeCustomFieldDefinition({
+        context: {
+          target: GRAPHQL_TARGETS.COMMERCETOOLS_PLATFORM,
+        },
+        variables: {
+          typeId: typeId,
+          version: version,
+          actions: actions,
+        },
+      });
+    } catch (graphQlResponse) {
+      throw extractErrorFromGraphQlResponse(graphQlResponse);
+    }
+  };
+
+  return {
+    loading,
+    execute,
+  };
+};
+
+export const updateFieldDefinitionLabel = () => {
+  const [fieldDefinitionLabelChange, { loading }] = useMcMutation(
+    UpdateFieldDefinitionLabel
+  );
+
+  const execute = async ({ typeId, version, actions }) => {
+    try {
+      return await fieldDefinitionLabelChange({
         context: {
           target: GRAPHQL_TARGETS.COMMERCETOOLS_PLATFORM,
         },
