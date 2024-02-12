@@ -8,6 +8,8 @@ import validate from '../custom-form/validate-field-definitions';
 import Spacings from '@commercetools-uikit/spacings';
 import { updateFieldDefinitionLabel } from '../../hooks/use-channels-connector/use-channels-connector';
 import { useApplicationContext } from '@commercetools-frontend/application-shell-connectors';
+import useShareState from '../../useShareState';
+import { useBetween } from 'use-between';
 
 const EditFieldForm = ({
   onCloseModal,
@@ -16,6 +18,7 @@ const EditFieldForm = ({
   fieldDefinitionValues,
 }) => {
   const params = useParams();
+  const { setChangeFieldLabel } = useBetween(useShareState);
   const { dataLocale, projectLanguages } = useApplicationContext((context) => ({
     dataLocale: context.dataLocale,
     projectLanguages: context.project.languages,
@@ -23,7 +26,7 @@ const EditFieldForm = ({
   const fileDefinitionLabelUpdate = updateFieldDefinitionLabel();
 
   const onSaveFieldDefinitionLabel = async (formikValues) => {
-    await fileDefinitionLabelUpdate.execute({
+    const resp = await fileDefinitionLabelUpdate.execute({
       typeId: params.id,
       version: versionId,
       actions: [
@@ -38,6 +41,8 @@ const EditFieldForm = ({
         },
       ],
     });
+    setChangeFieldLabel(Object.keys(resp?.data?.updateTypeDefinition));
+
     onCloseModal();
   };
 

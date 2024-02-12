@@ -10,5 +10,6 @@ export {
   removeFieldDefinition,
   deleteCustomTypeById,
   addfieldDefinitionByType,
-  updateFieldDefinitionLabel
+  updateFieldDefinitionLabel,
+  updateCustomTypeKey
 } from './use-channels-connector';
