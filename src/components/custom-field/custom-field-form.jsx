@@ -20,6 +20,9 @@ import {
   removeFieldDefinition,
 } from '../../hooks/use-channels-connector';
 import { useParams } from 'react-router';
+import { useEffect, useState } from 'react';
+import useShareState from '../../useShareState';
+import { useBetween } from 'use-between';
 
 const custColumns = [
   { key: 'name', label: 'Name' },
@@ -40,6 +43,13 @@ const CustomFieldDetailsForm = (props) => {
   }));
   const params = useParams();
   const removeAttribute = removeFieldDefinition(params.id);
+  const { changeFieldLabel, setChangeFieldLabel } = useBetween(useShareState);
+
+  useEffect(() => {
+    if (Object.keys(changeFieldLabel)?.length) {
+      window.location.reload();
+    }
+  }, [changeFieldLabel]);
 
   const deleteAttribute = async (versionId, fieldName) => {
     alert('Are you sure you want to delete this attribute');

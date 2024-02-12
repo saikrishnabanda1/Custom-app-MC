@@ -13,6 +13,11 @@ import {
 } from '../../hooks/use-channels-connector';
 import Text from '@commercetools-uikit/text';
 import {
+  DOMAINS,
+  NO_VALUE_FALLBACK,
+  NOTIFICATION_KINDS_SIDE,
+} from '@commercetools-frontend/constants';
+import {
   PageNotFound,
   FormModalPage,
 } from '@commercetools-frontend/application-components';
@@ -21,7 +26,6 @@ import Spacings from '@commercetools-uikit/spacings';
 import { ContentNotification } from '@commercetools-uikit/notifications';
 import CustomFieldForm from './custom-field-form';
 import { formatLocalizedString } from '@commercetools-frontend/l10n';
-import { DOMAINS, NO_VALUE_FALLBACK } from '@commercetools-frontend/constants';
 import { PERMISSIONS } from '../../constants';
 import { docToFormValues, formValuesToDoc } from './conversions';
 import { ApplicationPageTitle } from '@commercetools-frontend/application-shell';
@@ -31,6 +35,7 @@ import PrimaryButton from '@commercetools-uikit/primary-button';
 import { useCallback, useState } from 'react';
 import FieldDefinitionsForm from './field-definitions-form';
 import EditFieldForm from './edit-field-form';
+import { updateCustomTypeKey } from '../../hooks/use-channels-connector/use-channels-connector';
 
 const CustomFieldComp = (props) => {
   const intl = useIntl();
@@ -40,7 +45,7 @@ const CustomFieldComp = (props) => {
   const [editLabelState, setEditLabelState] = useState(false);
   const [labelStateValue, setLabelStateValue] = useState();
   const [fieldDefinitionValues, setFieldDefinitionsValues] = useState();
-  
+
   const { dataLocale, projectLanguages } = useApplicationContext((context) => ({
     dataLocale: context.dataLocale ?? '',
     projectLanguages: context.project?.languages ?? [],
@@ -54,9 +59,12 @@ const CustomFieldComp = (props) => {
 
   const { customFieldDetails, error, loading } = getCustomField(params.id);
   const customFieldUpdater = useCustomFieldUpdater();
+  const customTypeKeyUpdater = updateCustomTypeKey();
 
   const handleSubmit = useCallback(
     async (formikValues, formikHelpers) => {
+      console.log('formikValues', formikValues);
+
       const data = formValuesToDoc(formikValues);
       var enName,
         deName,
@@ -95,23 +103,21 @@ const CustomFieldComp = (props) => {
       };
 
       try {
-        await customFieldUpdater.execute({
+        await customTypeKeyUpdater.execute({
           typeId: params.id,
-          version: customFieldDetails.version,
-          originalDraft: oldData,
-          nextDraft: data,
-          description: description,
+          version: customFieldDetails?.version,
+          actions: [
+            {
+              changeKey: {
+                key: formikValues?.key,
+              },
+            },
+          ],
         });
         showNotification({
-          kind: 'success',
+          kind: NOTIFICATION_KINDS_SIDE.success,
           domain: DOMAINS.SIDE,
-          text: intl.formatMessage(messages.customFieldUpdated, {
-            customFieldName: formatLocalizedString(formikValues, {
-              key: 'name',
-              locale: dataLocale,
-              fallbackOrder: projectLanguages,
-            }),
-          }),
+          text: 'Custom type key updated',
         });
       } catch (graphQLErrors) {
         const transformedErrors = transformErrors(graphQLErrors);
@@ -186,7 +192,6 @@ const CustomFieldComp = (props) => {
             onPrimaryButtonClick={formProps.submitForm}
             labelPrimaryButton={FormModalPage.Intl.save}
             labelSecondaryButton={FormModalPage.Intl.revert}
-            //hideControls = "true"
           >
             <div style={{ display: 'flex', justifyContent: 'end' }}>
               <PrimaryButton
