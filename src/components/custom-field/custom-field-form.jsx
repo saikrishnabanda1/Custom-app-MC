@@ -173,7 +173,7 @@ const CustomFieldDetailsForm = (props) => {
             return null;
           }}
           isRequired
-          horizontalConstraint={13}
+          horizontalConstraint={16}
         />
         <TextField
           name="name"
@@ -189,7 +189,7 @@ const CustomFieldDetailsForm = (props) => {
           onBlur={formik.handleBlur}
           selectedLanguage={props.dataLocale}
           isReadOnly={props.isReadOnly}
-          horizontalConstraint={13}
+          horizontalConstraint={16}
         />
 
         <TextField
@@ -206,7 +206,7 @@ const CustomFieldDetailsForm = (props) => {
           onBlur={formik.handleBlur}
           selectedLanguage={props.dataLocale}
           isReadOnly={props.isReadOnly}
-          horizontalConstraint={13}
+          horizontalConstraint={16}
         />
       </CollapsiblePanel>
       <Spacings.Stack scale="xl">
