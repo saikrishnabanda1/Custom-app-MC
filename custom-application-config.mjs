@@ -12,8 +12,8 @@ const config = {
       initialProjectKey: 'aspire-practice-project',
     },
     production: {
-      applicationId: 'TODO',
-      url: 'https://your_app_hostname.com',
+      applicationId: 'clsuevehz0001xrfebrr88eis',
+      url: 'https://d387w1fvqie7eg.cloudfront.net',
     },
   },
   oAuthScopes: {
