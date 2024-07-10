@@ -4,16 +4,16 @@ import { PERMISSIONS, entryPointUriPath } from './src/constants';
  * @type {import('@commercetools-frontend/application-config').ConfigOptionsForCustomApplication}
  */
 const config = {
-  name: 'Starter E4b8d1',
+  name: 'BFF Accelerator',
   entryPointUriPath,
   cloudIdentifier: 'gcp-au',
   env: {
     development: {
-      initialProjectKey: 'aspire-practice-project',
+      initialProjectKey: 'b2c-accelerator',
     },
     production: {
-      applicationId: 'clsuevehz0001xrfebrr88eis',
-      url: 'https://d387w1fvqie7eg.cloudfront.net',
+      applicationId: 'clyfhv66u00152i1edszj3rb1',
+      url: 'https://d8k8ri9han8jr.cloudfront.net',
     },
   },
   oAuthScopes: {
